@@ -30,7 +30,7 @@ class KLUEDataset(Dataset):
                                max_length=self.max_seq_len
                                )['input_ids']  
         label = label_map[curr_item['label']]
-
+        print(f"{[self.tokenizer.decode(input_id) for input_id in title]}\n")
         return np.array(title), np.array(label)
 
 
