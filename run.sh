@@ -14,7 +14,6 @@ RUN_CMD="python main.py conf/base.yaml \
         hydra.run.dir=${RUNDIR} \
         train_path='${PWD}/data/ynat-v1.1/ynat-v1.1_train.json' \
         dev_path='${PWD}/data/ynat-v1.1/ynat-v1.1_dev.json' \
-        test_path='${PWD}/data/ynat-v1.1/ynat-v1.1_test.json' \
         save_path='${PWD}/${RUNDIR}/ckpt' \
         epochs=$EPOCHS \
         batch_size=$BSZ \

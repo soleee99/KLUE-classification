@@ -1,8 +1,7 @@
 import json
 import logging
-import torch
-
 import os
+import torch
 
 from torch.utils.data import DataLoader
 from transformers import BertTokenizerFast
@@ -35,7 +34,7 @@ def get_model(cfg):
 
 def save_checkpoint(cfg, model, epoch):
     #logging.info(f">>> Saving model at {args.save_path} for iteration {iteration}...")
-    save_path = f"{cfg.save_path}/{epoch}_checkpoint.pt"
+    save_path = f"{cfg.save_path}/{epoch+1}_checkpoint.pt"
      
     checkpoint = {
         'model': model.state_dict()

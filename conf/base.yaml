@@ -1,6 +1,5 @@
 train_path: data/ynat-v1.1/ynat-v1.1_train.json
 dev_path: data/ynat-v1.1/ynat-v1.1_dev.json
-test_path: data/ynat-v1.1/ynat-v1.1_test.json
 save_path: ckpt
 epochs: 20
 batch_size: 4
