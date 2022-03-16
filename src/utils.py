@@ -27,6 +27,9 @@ def get_dataloader(path_to_data, tokenizer, cfg):
 
 def get_model(cfg):
     model = BERTforKLUE(cfg)
+    if cfg.load_path:
+        checkpoint = torch.load(cfg.load_path)
+        model.load_state_dict(checkpoint)
     return model
 
 

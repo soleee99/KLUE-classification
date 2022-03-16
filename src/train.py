@@ -32,8 +32,6 @@ def train(cfg, model, optimizer, train_ds, dev_ds, device, train_log):
             train_log.write(f"[Epoch {epoch+1} / {epochs}] loss: {accumulated_loss}\n")
             train_log.flush()
         if (epoch + 1) % val_interval == 0:
-            train_log.write("==========VALIDATION==========\n")
             eval(model, dev_ds, device, train_log)
-            train_log.write("==============================\n")
         if (epoch + 1) % save_interval == 0:
             save_checkpoint(cfg, model, epoch)

@@ -23,7 +23,7 @@ RUN_CMD="python main.py conf/base.yaml \
         max_seq_len=$MAX_SEQ_LEN \
         val_interval=1 \
         log_interval=1 \
-        save_interval=2 \
+        save_interval=1 \
         train_log_path='${PWD}/${RUNDIR}/log/train.log' \
         test_log_path='${PWD}/${RUNDIR}/log/test.log' \
         "

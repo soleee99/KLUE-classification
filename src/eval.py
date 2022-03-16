@@ -16,7 +16,7 @@ def eval(model, ds, device, log):
         pred = torch.argmax(logits, dim=-1)
         num_correct += torch.sum((pred == labels).int())
 
-    log.write(f"[Accuracy]: {num_correct / num_samples}\n")
+    log.write(f"\t[Accuracy]: {num_correct / num_samples}\n")
     log.flush()
 
     model.train()

@@ -38,7 +38,8 @@ def main(cfg):
     optimizer = Adam(model.parameters(), lr=cfg.lr)
     model = model.to(device)
 
-    train(cfg, model, optimizer, train_ds, dev_ds, device, train_log_f)
+    if not cfg.test_only:
+        train(cfg, model, optimizer, train_ds, dev_ds, device, train_log_f)
 
     eval(model, test_ds, device, test_log_f)
 
