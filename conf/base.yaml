@@ -1,0 +1,9 @@
+train_path: ./data/ynat-v1.1/ynat-v1.1_train.json
+eval_path: ./data/ynat-v1.1/ynat-v1.1_dev.json
+save_path: outputs/save
+out_dir: outputs
+epochs: 2
+batch_size: 8
+hidden_size: 256
+lr: 0.0008
+finetune_type: base
