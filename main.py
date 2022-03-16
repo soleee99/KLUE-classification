@@ -9,11 +9,15 @@ from torch.optim import Adam
 
 from src.utils import get_tokenizer, get_dataloader, get_model
 from src.train import train
-
+from src.eval import eval
 
 def main(cfg):
     logging.info('=====================Configs=====================')
     logging.info(OmegaConf.to_yaml(cfg))
+
+    # Open logging files
+    train_log_f = open(cfg.train_log_path, 'w')
+    test_log_f = open(cfg.test_log_path, 'w')
 
     # Get Tokenizer
     tokenizer = get_tokenizer()
@@ -21,18 +25,22 @@ def main(cfg):
     # Get Dataloader
     logging.info('=====================Getting Dataloader=====================')
     train_ds = get_dataloader(cfg.train_path, tokenizer, cfg)
-    eval_ds = get_dataloader(cfg.eval_path, tokenizer, cfg)
+    dev_ds = get_dataloader(cfg.dev_path, tokenizer, cfg)
+    test_ds = get_dataloader(cfg.test_path, tokenizer, cfg)
 
     # Get device
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     logging.info(f"Device type is: {device}")
 
     # Get Model and Optimizer
+    logging.info('=====================Getting Model & Optimizer=====================')
     model = get_model(cfg)
     optimizer = Adam(model.parameters(), lr=cfg.lr)
     model = model.to(device)
 
-    train(cfg, model, optimizer, train_ds, eval_ds)
+    train(cfg, model, optimizer, train_ds, dev_ds, device, train_log_f)
+
+    eval(model, test_ds, device, test_log_f)
 
 if __name__ == '__main__':
     cfg_path = sys.argv[1]

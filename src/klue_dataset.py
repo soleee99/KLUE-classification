@@ -1,3 +1,4 @@
+import numpy as np
 from torch.utils.data import Dataset
 
 # label mapper from 'labels' to a label index
@@ -23,15 +24,14 @@ class KLUEDataset(Dataset):
     
     def __getitem__(self, idx):
         curr_item = self.data[idx]
-
         title = self.tokenizer(curr_item['title'],
                                padding='max_length', 
                                truncation=True, 
                                max_length=self.max_seq_len
-                               )        
+                               )['input_ids']  
         label = label_map[curr_item['label']]
 
-        return (title, label)
+        return np.array(title), np.array(label)
 
 
 def build_dataset(raw_data, tokenizer, cfg):

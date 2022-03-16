@@ -1,2 +1,3 @@
 data/ynat-v1.1
 outputs/
+*__pycache__*
