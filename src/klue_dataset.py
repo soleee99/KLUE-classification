@@ -33,6 +33,7 @@ class KLUEDataset(Dataset):
         self.data = data
         self.tokenizer = tokenizer
         self.max_seq_len = cfg.max_seq_len
+        self.preprocess = cfg.preprocess
     
     def __len__(self):
         return len(self.data)
@@ -46,13 +47,14 @@ class KLUEDataset(Dataset):
                                )['input_ids']  
         label = label_map[curr_item['label']]
 
-        decoded = [self.tokenizer.decode(input_id) for input_id in title]
-        preproc_title = []
-        for i, word in enumerate(decoded):
-            for stopword in korean_stopwords:
-                if stopword not in word:
-                    preproc_title.append(title[i])
-        title = title + [0] * (self.max_seq_len - len(preproc_title))
+        if self.preprocess:
+            decoded = [self.tokenizer.decode(input_id) for input_id in title]
+            preproc_title = []
+            for i, word in enumerate(decoded):
+                for stopword in korean_stopwords:
+                    if stopword not in word:
+                        preproc_title.append(title[i])
+            title = title + [0] * (self.max_seq_len - len(preproc_title))
         #print(f"{[self.tokenizer.decode(input_id) for input_id in title]}\n")
         
         return np.array(title), np.array(label)
