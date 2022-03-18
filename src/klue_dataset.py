@@ -34,6 +34,7 @@ class KLUEDataset(Dataset):
         self.tokenizer = tokenizer
         self.max_seq_len = cfg.max_seq_len
         self.preprocess = cfg.preprocess
+        self.remove_num = cfg.remove_num
     
     def __len__(self):
         return len(self.data)
@@ -54,9 +55,19 @@ class KLUEDataset(Dataset):
                 for stopword in korean_stopwords:
                     if stopword not in word:
                         preproc_title.append(title[i])
-            title = title + [0] * (self.max_seq_len - len(preproc_title))
+            title = preproc_title + [0] * (self.max_seq_len - len(preproc_title))
         #print(f"{[self.tokenizer.decode(input_id) for input_id in title]}\n")
-        
+
+        if self.remove_num:
+            def has_numbers(inputString):
+                return any(char.isdigit() for char in inputString)
+            decoded = [self.tokenizer.decode(input_id) for input_id in title]
+            preproc_title = []
+            for i, word in enumerate(decoded):
+                if not has_numbers(word):
+                    preproc_title.append(title[i])
+            title = preproc_title + [0] * (self.max_seq_len - len(preproc_title))
+
         return np.array(title), np.array(label)
 
 

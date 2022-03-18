@@ -7,7 +7,7 @@ import torch
 from omegaconf import OmegaConf
 from torch.optim import Adam
 
-from src.utils import get_tokenizer, get_dataloader, get_model
+from src.utils import get_tokenizer, get_dataloader, get_model, set_seed
 from src.train import train
 from src.eval import eval
 
@@ -15,6 +15,9 @@ from src.eval import eval
 def main(cfg):
     logging.info('=====================Configs=====================')
     logging.info(OmegaConf.to_yaml(cfg))
+
+    # Set the Random Seed
+    set_seed(cfg.seed)
 
     # Get Tokenizer
     tokenizer = get_tokenizer()

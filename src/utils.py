@@ -1,6 +1,8 @@
 import json
 import logging
+import numpy as np
 import os
+import random
 import torch
 
 from torch.utils.data import DataLoader
@@ -41,3 +43,9 @@ def save_checkpoint(cfg, model, epoch):
     }
     
     torch.save(checkpoint, save_path)
+
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)

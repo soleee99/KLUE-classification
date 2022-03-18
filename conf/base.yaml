@@ -14,3 +14,5 @@ test_log_path: log/test.log
 load_path: False
 test_only: False
 preprocess: False
+remove_num: False
+seed: 905
