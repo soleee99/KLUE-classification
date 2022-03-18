@@ -24,7 +24,8 @@ This repository uses the [bert-kor-base](https://huggingface.co/kykim/bert-kor-b
 ## 🚀 How to Run 
 Running the following creates the reduced dataset.
 ```
-python utils/same_num_labels.py
+cd utils/
+python same_num_labels.py
 ```
 
 The script below trains the bert-kor-base model.
