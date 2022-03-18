@@ -3,9 +3,10 @@ EPOCHS=$2
 BSZ=$3
 MAX_SEQ_LEN=$4
 FT_TYPE=$5
+SEED=$6
 
 NOW=$(date +"%Y-%m-%d_%H-%M-%S")     
-RUNDIR="outputs/${FT_TYPE}/lr-${LR}_epoch-${EPOCHS}_bsz-${BSZ}_msl-${MAX_SEQ_LEN}/${NOW}"
+RUNDIR="outputs/${FT_TYPE}/lr-${LR}_epoch-${EPOCHS}_bsz-${BSZ}_msl-${MAX_SEQ_LEN}/full_ds/${SEED}_${NOW}"
 mkdir -p $RUNDIR
 mkdir -p ${RUNDIR}/ckpt
 mkdir -p ${RUNDIR}/log
@@ -25,6 +26,7 @@ RUN_CMD="python main.py conf/base.yaml \
         save_interval=10 \
         train_log_path='${PWD}/${RUNDIR}/log/train.log' \
         test_log_path='${PWD}/${RUNDIR}/log/test.log' \
+        seed=${SEED} \
         "
 
 echo $RUN_CMD

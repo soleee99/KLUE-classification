@@ -13,6 +13,6 @@ train_log_path: log/train.log
 test_log_path: log/test.log
 load_path: False
 test_only: False
-preprocess: False
+remove_stopwords: False
 remove_num: False
 seed: 905

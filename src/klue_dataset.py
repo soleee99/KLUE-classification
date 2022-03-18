@@ -33,7 +33,7 @@ class KLUEDataset(Dataset):
         self.data = data
         self.tokenizer = tokenizer
         self.max_seq_len = cfg.max_seq_len
-        self.preprocess = cfg.preprocess
+        self.remove_stopwords = cfg.remove_stopwords
         self.remove_num = cfg.remove_num
     
     def __len__(self):
@@ -48,7 +48,7 @@ class KLUEDataset(Dataset):
                                )['input_ids']  
         label = label_map[curr_item['label']]
 
-        if self.preprocess:
+        if self.remove_stopwords:
             decoded = [self.tokenizer.decode(input_id) for input_id in title]
             preproc_title = []
             for i, word in enumerate(decoded):
