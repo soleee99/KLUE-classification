@@ -2,14 +2,34 @@
 💬 Text Classification using KLUE benchmark  
 This repository uses the [bert-kor-base](https://huggingface.co/kykim/bert-kor-base/tree/main) model to do text classification with the KLUE benchmark.
 
-### 📌 Some Requirements
+### Some Requirements
 - place the data in `./data/ynat-v1.1`
 - the `hydra-core` package (refer to `requirements.txt`)
 -------------
+## 🥇 Result Overview
+
+<img width="555" alt="Screen Shot 2022-03-18 at 2 17 14 PM" src="https://user-images.githubusercontent.com/54504359/158941947-1a1fbe33-008c-4d75-abf8-a18f02a49407.png">
+
+- Type of Finetuning Layer
+  - Base FT: finetuning layer with one Linear layer
+  - One FT: finetuning layer with two Linear layers
+- Dataset Size
+  - Full Dataset: the full `klue-ynat` dataset
+  - Reduced Dataet: number of samples for each label in training dataset is reduced to be equally sized
+- Token Preprocessing:
+  - just tokenize: just using the `BertTokenizerFast` of `bert-kor-base`
+  - remove_stopwords: removing tokens with predefined stopwords
+  - remove_num: removing tokens with numbers
+-------------
 ## 🚀 How to Run 
+Running the following creates the reduced dataset.
+```
+python utils/same_num_labels.py
+```
+
 The script below trains the bert-kor-base model.
 ```
-run.sh {LR} {EPOCHS} {BSZ} {MAX_SEQ_LEN} {FT_TYPES}
+run.sh {LR} {EPOCHS} {BSZ} {MAX_SEQ_LEN} {FT_TYPES} {SEED}
 ```
 - `FT_TYPES` are used to choose the finetuning layer. Possible options are;
   - `base`: a simple, single linear layer
@@ -50,6 +70,6 @@ seed              specify an integer seed
 
 ## 🖍 Checking Outputs
 Running `run.sh`...
-- In training mode, the **train loss and test accuracies** will be stored in `./outputs/${FT_TYPE}/lr-${LR}_epoch-${EPOCHS}_bsz-${BSZ}_msl-${MAX_SEQ_LEN}/${NOW}/log/train.log`
-- In testing mode, the test accuracy will be stored in `./outputs/${FT_TYPE}/lr-${LR}_epoch-${EPOCHS}_bsz-${BSZ}_msl-${MAX_SEQ_LEN}/${NOW}/log/test.log`
-
+- In training mode, the **train loss and test accuracies** will be stored in `./outputs/${FT_TYPE}/lr-${LR}_epoch-${EPOCHS}_bsz-${BSZ}_msl-${MAX_SEQ_LEN}/${SEED}_${NOW}/log/train.log`
+- In testing mode, the test accuracy will be stored in `./outputs/${FT_TYPE}/lr-${LR}_epoch-${EPOCHS}_bsz-${BSZ}_msl-${MAX_SEQ_LEN}/${SEED}${NOW}/log/test.log`
+- change `hydra.run.dir` configuration in the script to change the output directory
